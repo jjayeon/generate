@@ -8,7 +8,7 @@ import (
 	"io"
 	"os"
 
-	"github.com/jjayeon/generate"
+	"github.com/hankc97/Schema-Gen"
 )
 
 var (
