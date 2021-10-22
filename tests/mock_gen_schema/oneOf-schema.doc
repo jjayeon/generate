@@ -147,20 +147,21 @@ ORDER SOLUTION FOR ONEOF:
     3) if $ref doesnt exist, we assume there is a type string, which is the generic 
     Value Parent + Child + Value output 
 
-line 60 - 92:
-solution:
-    1) WorkflowOnYAMLAssertType, consists of 
-        Parent + Child + YAMLAssertType
-        We pass node.Raw as the argument
-        
-    2) WorkflowOnYAMLAssertType func, return an error
-        a) kinds, stores an array of the kinds of nodes we have from our oneOf
-        type WorkflowOnOneOf struct {
-            scalarNode *OnEventConstants
-            sequenceNode *[]OnEventConstants
-            mappingNode *[]WorkFlowOnValue
-
-        b) we loop through them, if kind does not exist, we return an error which recursive back to the top
+// below no longer needed, see issue #2
+// line 60 - 92:
+// solution:
+//     1) WorkflowOnYAMLAssertType, consists of 
+//         Parent + Child + YAMLAssertType
+//         We pass node.Raw as the argument
+//         
+//     2) WorkflowOnYAMLAssertType func, return an error
+//         a) kinds, stores an array of the kinds of nodes we have from our oneOf
+//         type WorkflowOnOneOf struct {
+//             scalarNode *OnEventConstants
+//             sequenceNode *[]OnEventConstants
+//             mappingNode *[]WorkFlowOnValue
+// 
+//         b) we loop through them, if kind does not exist, we return an error which recursive back to the top
 
 example:
 
@@ -177,7 +178,7 @@ example:
     1) we then use a switch case to recurse deeper into our yaml file, to decode it by the type
 
 
-line 94 - 102: Constants = enum
+line ~~94 - 102~~ 75-83: Constants = enum
 example:
 
 "event": {
@@ -199,7 +200,7 @@ solution:
         Enum[0] Parent + Child + Constants = "enum[0] ... enum[-1]"
 
 
-line 104- 108: oneOf -> null 
+line ~~104- 108~~ 85-89: oneOf -> null 
 "properties": {
     "check_run": {
         "$comment": "https://help.github.com/en/github/automating-your-workflow-with-github-actions/events-that-trigger-workflows#check-run-event-check_run",

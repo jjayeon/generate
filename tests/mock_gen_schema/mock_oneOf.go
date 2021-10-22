@@ -60,10 +60,6 @@ type WorkflowOnOneOf struct {
 func (node *WorkflowOnNode) UnmarshalYAML(value *yaml.Node) error {
 	node.Raw = value
 
-	if err := WorkflowOnYAMLAssertType(node.Raw); err != nil {
-		return err
-	}
-
 	switch node.Raw.Kind {
 		case yaml.ScalarNode:
 			return value.Decode(&node.OneOf.scalarNode)
@@ -74,21 +70,6 @@ func (node *WorkflowOnNode) UnmarshalYAML(value *yaml.Node) error {
 		default:
 			return fmt.Errorf("%d:%d	error	Expected one of: string, array, map type", node.Raw.Line, node.Raw.Column)
 	}
-}
-
-func WorkflowOnYAMLAssertType(rawNode *yaml.Node) error {
-	kinds := []yaml.Kind{yaml.ScalarNode, yaml.SequenceNode, yaml.MappingNode}
-	containsFlag := false
-	for _, kind := range kinds {
-		if rawNode.Kind == kind {
-			containsFlag = true
-		}
-	}
-	if !containsFlag {
-		return fmt.Errorf("%d:%d	error	Expected one of: string, array, map type", rawNode.Line, rawNode.Column)
-	}
-
-	return nil
 }
 
 type OnEventConstants string 
@@ -121,31 +102,12 @@ type OnCheckRunOneOf struct {
 func (node *OnCheckRunNode) UnmarshalYAML(value *yaml.Node) error {
 	node.Raw = value
 
-	if err := OnCheckRunYAMLAssertType(node.Raw); err != nil {
-		return err
-	}
-
 	switch node.Raw.Kind {
 		case yaml.MappingNode:
 			return value.Decode(&node.OneOf.mappingNode)
 		default:
 			return fmt.Errorf("%d:%d	error	Expected one of: string, array, map type", node.Raw.Line, node.Raw.Column)
 	}
-}
-
-func OnCheckRunYAMLAssertType(rawNode *yaml.Node) error {
-	kinds := []yaml.Kind{yaml.MappingNode}
-	containsFlag := false
-	for _, kind := range kinds {
-		if rawNode.Kind == kind {
-			containsFlag = true
-		}
-	}
-	if !containsFlag {
-		return fmt.Errorf("%d:%d	error	Expected one of: string, array, map type", rawNode.Line, rawNode.Column)
-	}
-
-	return nil
 }
 
 type OnCheckRunValue struct {
